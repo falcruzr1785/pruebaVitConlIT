@@ -267,14 +267,12 @@ export class CreateP extends LitElement {
                  <label class="label-seccion">
                 Subasta: ${this.subasta}
                  y Naviera: ${this.naviera}</label>
-            <!-- ... -->
+            <!-- ... titulo -->
            
             
 
             <div class="radio-group">
 
-         
-         
             <label class="title-seccion">Tipo de pago:</label>
 
             <div class".radio-container">
