@@ -139,12 +139,12 @@ export class GetList extends LitElement {
       
     ]; // Aquí deberías cargar los datos de tu JSON
 
-    crearPlantila = (v) => {
-      if(v){
-        const textP = v;
-      }
+    // crearPlantila = (v) => {
+    //   if(v){
+    //     const textP = v;
+    //   }
       
-    };
+    // };
 
 
     this.tableClasses = {
@@ -200,10 +200,10 @@ export class GetList extends LitElement {
                   <td>${item.cliente}</td>
                   <td>${item.arribo ? "Sí" : "No"}</td>
                   <td>
-                    <button  class="btnEditar" @click=${() => this.editRow(item)}>Editar</button>
+                    <!-- <button  class="btnEditar" @click=${() => this.editRow(item)}>Editar</button> -->
                   </td>
                   <td>
-                    <button  class="btnEditar" @click=${() => this.editRow(item)}>Crear plantilla</button>
+                    <!-- <button  class="btnEditar" @click=${() => this.editRow(item)}>Crear plantilla</button> -->
                   </td>
                 </tr>
               `
