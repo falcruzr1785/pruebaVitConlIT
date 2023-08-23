@@ -1,0 +1,44 @@
+import { LitElement, html, customElement, TemplateResult } from "lit-element";
+import "@spectrum-web-components/button/sp-button.js";
+import "@spectrum-web-components/button-group/sp-button-group.js";
+
+@customElement("my-button")
+export default class MyActionGroup extends LitElement {
+  protected render(): TemplateResult {
+    return html`
+      <sp-button-group>
+        <sp-button variant="cta">CTA</sp-button>
+        <sp-button variant="primary">Primary</sp-button>
+        <sp-button variant="secondary">Secondary</sp-button>
+        <sp-button variant="negative">Negative</sp-button>
+      </sp-button-group>
+      <br />
+      <sp-button-group>
+        <sp-button quiet variant="cta">CTA</sp-button>
+        <sp-button quiet variant="primary">Primary</sp-button>
+        <sp-button quiet variant="secondary">Secondary</sp-button>
+        <sp-button quiet variant="negative">Negative</sp-button>
+      </sp-button-group>
+      <br />
+      <sp-button-group>
+        <sp-button disabled variant="cta">CTA</sp-button>
+        <sp-button disabled variant="primary">Primary</sp-button>
+        <sp-button disabled variant="secondary">Secondary</sp-button>
+        <sp-button disabled variant="negative">Negative</sp-button>
+      </sp-button-group>
+    `;
+  }
+}
+
+
+
+        //     {vin: 15, marca: 'Toyota', modelo: 'Corolla', ano:2010, naviera:'ATM', cliente:'Pedro', arribo: false},
+        //     {vin: 31, marca: 'Toyota', modelo: 'Corolla', ano:2010, naviera:'ATM', cliente:'Pedro', arribo: false},
+        //     {vin: 14, marca: 'Toyota', modelo: 'Corolla', ano:2010, naviera:'ATM', cliente:'Pedro', arribo: false},
+        //     {vin: 12, marca: 'Toyota', modelo: 'Corolla', ano:2010, naviera:'ATM', cliente:'Pedro', arribo: false},
+        //     {vin: 11, marca: 'Toyota', modelo: 'Corolla', ano:2010, naviera:'ATM', cliente:'Pedro', arribo: false},
+        //     {vin: 13, marca: 'Toyota', modelo: 'Corolla', ano:2010, naviera:'ATM', cliente:'Pedro', arribo: false},
+        //     {vin: 10, marca: 'Toyota', modelo: 'Corolla', ano:2010, naviera:'ATM', cliente:'Pedro', arribo: false},
+
+
+

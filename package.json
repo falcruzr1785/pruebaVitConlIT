@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lit-labs/motion": "^1.0.4",
+    "add": "^2.0.6",
     "lit": "^2.7.6",
-    "sweetalert2": "^11.7.22"
+    "sweetalert2": "^11.7.22",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "vite": "^4.4.5"

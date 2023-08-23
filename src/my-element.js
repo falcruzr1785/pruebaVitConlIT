@@ -1,99 +1,160 @@
-import { LitElement, css, html } from 'lit'
-import litLogo from './assets/lit.svg'
-import viteLogo from '/vite.svg'
+import { LitElement, css, html} from 'lit'
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
+
 export class MyElement extends LitElement {
   static get properties() {
     return {
-      /**
-       * Copy for the read the docs hint.
-       */
-      docsHint: { type: String },
-
-      /**
-       * The number of times the button has been clicked.
-       */
-      count: { type: Number },
-    }
+      text: String,
+      firstName: String,
+    };
   }
 
   constructor() {
-    super()
-    this.docsHint = 'Click on the Vite and Lit logos to learn more'
-    this.count = 0
+    super();
+    this.firstName = "";
   }
+  entradaDeText = (event) => {
+    this.firstName = event.target.value;
+  };
+  handleSubmit = () => {
+    Swal.fire({
+      icon: "success",
+      title: "¡Éxito!",
+      text: `Su nombre es: ${this.firstName}`,
+      confirmButtonColor: "swalBtnColor",
+      confirmButtonText: "Aceptar...",
+    }).then(() => {});
+  };
 
+  static styles = css`
+  .btn {
+    font-weight: var(--font-weight, 100);
+    background-color: absolute;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 18px; /* Cambia el tamaño de fuente para hacer el botón más grande */
+    padding: 10px 20px; /* Agrega espaciado al botón */
+  }
+  input {
+    width: 20%;
+    position: center;
+    origin: center;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .div-host {
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .title-NewVehicle {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .selectNaviera {
+    width: 22%;
+    position: center;
+    origin: center;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .div-button {
+    background-color: grey;
+    border-radius: 8px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+  .div-Naviera-Datos{
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+   
+  `;
   render() {
     return html`
-    <div class="container">
-        <div class="icons">
-          <a href="https://vitejs.dev" target="_blank">
-            <img src=${viteLogo} class="logo" alt="Vite logo" />
-          </a>
-          <a href="https://lit.dev" target="_blank">
-            <img src=${litLogo} class="logo lit" alt="Lit logo" />
-          </a>
+      <div class="div-host">
+        <div class="div-Naviera-Datos">
+        <div class="div-Title">
+          <h1 class="title-NewVehicle">Datos del vehículo:</h1>
         </div>
-        <slot></slot>
-        <div class="card">
-          <button @click=${this._onClick} part="button">
-            count is ${this.count}
-          </button>
-          <button @click=${this._alerta} part="button">
-            boton para ver alerta 
-          </button>
+
+        <input
+          type="search"
+          @input=${this.entradaDeText}
+          placeholder="NUMERO DE VIN"
+        />
+        <input type="text" @input=${this.entradaDeText} placeholder="MARCA" />
+        <input type="text" @input=${this.entradaDeText} placeholder="MODELO" />
+        <input
+          type="number"
+          min="1"
+          @input=${this.entradaDeText}
+          placeholder="PRECIO"
+        />
         </div>
-        <p class="read-the-docs">${this.docsHint}</p>
+        <!-- Naviera -->
+        <div class="div-Naviera-Datos">
+        <div class="div-Title">
+            <h1 class="title-NewVehicle">Transporte:</h1>
+          </div>
+        <input
+          type="number"
+          min="1"
+          @input=${this.entradaDeText}
+          placeholder="Monto de Grúa"
+        />
+        <input
+          type="number"
+          min="1"
+          @input=${this.entradaDeText}
+          placeholder="Monto Barco"
+        />
+        <input
+          type="number"
+          min="1"
+          @input=${this.entradaDeText}
+          placeholder="Monto/Otro"
+        />
+         
+
+          <select class="selectNaviera" name="navieras" id="naviera" required>
+            <option disabled selected>Selecciona una naviera</option>
+            <option value="northAtlantic">North Atlantic</option>
+            <option value="atm">ATM</option>
+            <option value="matus">Matus</option>
+
+            <!-- @value=${this.entradaDeText} -->
+          </select>
+        </div>
+        <div class="div-button">
+          <button class="btn" @click=${this.handleSubmit}>Guardar</button>
+        </div>
+        <p>${this.firstName ? `First Name: ${this.firstName}` : ""}</p>
       </div>
-      
     `;
-  }
- 
-  _alerta(){
-    Swal.fire({
-      icon: 'success',
-      title: '¡Éxito!',
-      text: 'Operación completada exitosamente.',
-    });
-  }
-
-  _onClick() {
-    this.count++
-  }
-
-  static get styles() {
-    return css`
-      
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    .icons {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-
-    .logo {
-      height: 6em;
-      padding: 1.5em;
-      will-change: filter;
-      transition: filter 300ms;
-    }
-
-    `
   }
 }
 
-window.customElements.define('my-element', MyElement)
+  customElements.define('my-element', MyElement);
+
+ 
+ 
