@@ -12,7 +12,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         
-        crearVehiculo: resolve(__dirname, "create-V.html"),
+        crearVehiculo: resolve(__dirname, "create-v.html"),
         
         crearPlantillas: resolve(__dirname, "create-p.html"),
       },
