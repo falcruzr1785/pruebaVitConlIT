@@ -2,7 +2,6 @@ import { LitElement, html, css } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { animate, fadeOut } from '@lit-labs/motion';
 
 
 export class GetList extends LitElement {
