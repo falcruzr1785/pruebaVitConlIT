@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { plantillasDatos } from '../public/plantillasDatos';
+import { plantillasDatos } from '/public/plantillasDatos.js';
 plantillasDatos.copartP();
 export class CreateP extends LitElement {
   static get properties() {

@@ -1,7 +1,7 @@
 import { LitElement, css, html} from 'lit'
 
 
-export class MyElement extends LitElement {
+export class createV extends LitElement {
   static get properties() {
     return {
       text: String,
@@ -154,7 +154,7 @@ export class MyElement extends LitElement {
   }
 }
 
-  customElements.define('my-element', MyElement);
+  customElements.define('create-v', createV);
 
  
  

@@ -47,7 +47,7 @@ export class HeadElement extends LitElement {
           <a href="/index.html" class="menu-link">Inicio</a>
         </div>
         <div class="menu-item">
-          <a href="/create-V.html" class="menu-link">Guardar vehículo</a>
+          <a href="/create-v.html" class="menu-link">Guardar vehículo</a>
         </div>
 
         <div class="menu-item">

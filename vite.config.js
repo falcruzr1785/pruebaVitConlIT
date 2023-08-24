@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   build: {
     lib: {
-      entry: "src/get-List.js",
+      entry: "app.js",
       formats: ["es"],
     },
     rollupOptions: {
@@ -13,7 +13,7 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
         
         crearVehiculo: resolve(__dirname, "create-V.html"),
-
+        
         crearPlantillas: resolve(__dirname, "create-p.html"),
       },
     },
