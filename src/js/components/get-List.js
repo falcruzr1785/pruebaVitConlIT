@@ -161,7 +161,7 @@ export class GetList extends LitElement {
     return html`
       <div class="div-list">
       <div class="div-Title">
-          <h1 class="title-list">Lista de vehículos</h1>
+          <h1 class="title-list">Lista de vehículos registrados</h1>
         </div>
         <table class="table-list">
           <thead class="head-list">
