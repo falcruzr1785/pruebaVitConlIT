@@ -1,21 +1,54 @@
 import { LitElement, css, html} from 'lit'
-
+import {ApiVehicle} from '../API/data.js'
 
 export class createV extends LitElement {
   static get properties() {
     return {
       text: String,
       firstName: String,
+      vin: String,
+      marca: String
     };
   }
 
   constructor() {
     super();
     this.firstName = "";
+    this.vin= "";
+    this.marca
   }
   entradaDeText = (event) => {
     this.firstName = event.target.value;
+    
   };
+  entradaDeVin = async (event) => {//JTEGH20V930094412
+    const marca  = this.shadowRoot.getElementById("id-marca");
+    const modelo  = this.shadowRoot.getElementById("id-modelo");
+    const year = this.shadowRoot.getElementById("id-year");
+    const inputValue = event.target.value;
+    
+  if (inputValue.length >= 17) {
+    try {
+      const result = await ApiVehicle(inputValue);
+
+      if ( result.Results[0] ) {
+       
+        marca.value = result.Results[0].Make;
+        modelo.value = result.Results[0].Model;
+        year.value = result.Results[0].ModelYear;
+        console.log(`Año del modelo: ${result.Results[0].ModelYear}`);
+      } else {
+        console.log('Año del modelo no encontrado en la respuesta.');
+      }
+    } catch (error) {
+      console.error('Hubo un error:', error);
+    }
+  } else {
+    // Maneja el caso en que la longitud no sea suficiente
+    console.log('Longitud insuficiente');
+  }
+  
+   };
   handleSubmit = () => {
     Swal.fire({
       icon: "success",
@@ -99,11 +132,15 @@ export class createV extends LitElement {
 
         <input
           type="search"
-          @input=${this.entradaDeText}
+          id="id-vin"
+          @input=${this.entradaDeVin}
+          @change=${this.handleVinChange}
           placeholder="NUMERO DE VIN"
         />
-        <input type="text" @input=${this.entradaDeText} placeholder="MARCA" />
-        <input type="text" @input=${this.entradaDeText} placeholder="MODELO" />
+        <input type="text" id="id-marca" @input=${this.entradaDeText} placeholder="MARCA" />
+        <input type="text" id="id-modelo" @input=${this.entradaDeText} placeholder="MODELO" />
+        <input type="number" id="id-year" min="1900" max="2099" @input=${this.entradaDeText} placeholder="AÑO" />
+
         <input
           type="number"
           min="1"
