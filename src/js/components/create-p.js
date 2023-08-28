@@ -1,3 +1,6 @@
+///codigo JS llamado create-p.js 
+//QUE DEBE TOMAR EL ID desde get-List.js Y RELLENAR LOS CAMPOS NECESARIOS para crear platillas
+
 import { LitElement, html, css } from 'lit';
 import { plantillasDatos } from '/public/plantillasDatos.js';
 plantillasDatos.copartP();
@@ -18,13 +21,13 @@ export class CreateP extends LitElement {
       mOtro: Number,
       naviera: String,
       subasta: String,
-      textP: String,
+     
     };
   }
 
   constructor() {
     super();
-    this.id = "editVehicle";
+    this.id = "1";
     this.lot = "124786";
     this.vin = "12345678965214741";
     this.marca = "Toyota";

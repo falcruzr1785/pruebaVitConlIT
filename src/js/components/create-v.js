@@ -7,24 +7,41 @@ export class createV extends LitElement {
       text: String,
       firstName: String,
       vin: String,
-      marca: String
+      marca: String,
+      modelo: String,
+      year: String,
+      precio: String,
+      naviera: String,
+      montoGrua: String,
+      montoBarco: String,
+      montoOtro: String,
     };
   }
+  
 
   constructor() {
     super();
-    this.firstName = "";
-    this.vin= "";
-    this.marca
+    this.firstName = '';
+    this.vin = '';
+    this.marca = '';
+    this.modelo = '';
+    this.year = '';
+    this.precio = '';
+    this.naviera = '';
+    this.montoGrua = '';
+    this.montoBarco = '';
+    this.montoOtro = '';
+
   }
   entradaDeText = (event) => {
-    this.firstName = event.target.value;
-    
+  this[`${event.target.id}`] = event.target.value;
+  console.log(this[`${event.target.id}`]);
   };
   entradaDeVin = async (event) => {//JTEGH20V930094412
-    const marca  = this.shadowRoot.getElementById("id-marca");
-    const modelo  = this.shadowRoot.getElementById("id-modelo");
-    const year = this.shadowRoot.getElementById("id-year");
+    const vin  = this.shadowRoot.getElementById("vin");
+    const marca  = this.shadowRoot.getElementById("marca");
+    const modelo  = this.shadowRoot.getElementById("modelo");
+    const year = this.shadowRoot.getElementById("year");
     const inputValue = event.target.value;
     
   if (inputValue.length >= 17) {
@@ -32,10 +49,15 @@ export class createV extends LitElement {
       const result = await ApiVehicle(inputValue);
 
       if ( result.Results[0] ) {
-       
+        this.vin = vin.value;
+        this.marca = result.Results[0].Make;
+        this.modelo = result.Results[0].Model;
+        this.year = result.Results[0].ModelYear;
         marca.value = result.Results[0].Make;
         modelo.value = result.Results[0].Model;
         year.value = result.Results[0].ModelYear;
+
+
         console.log(`Año del modelo: ${result.Results[0].ModelYear}`);
       } else {
         console.log('Año del modelo no encontrado en la respuesta.');
@@ -49,14 +71,48 @@ export class createV extends LitElement {
   }
   
    };
-  handleSubmit = () => {
+  guardarDatos = () => {
+  // Crea un objeto con los datos a mostrar en el cuadro de diálogo
+  const vehicleData = {
+    vin: this.vin,
+    marca: this.marca,
+    modelo: this.modelo,
+    year: this.year,
+    precio: this.precio,
+    naviera: this.naviera,
+    montoGrua: this.montoGrua,
+    montoBarco: this.montoBarco,
+    montoOtro: this.montoOtro,
+  };
+
+  const camposObligatorios = ["vin","marca", "modelo", "year", "precio", "naviera", "montoGrua", "montoBarco"];
+  const campoFaltante = camposObligatorios.find((campo) => !vehicleData[campo]);
+  console.log( `el vin dentro de guradar datos`,vehicleData.vin);
+  console.log("Campos Obligatorios:", camposObligatorios); // Agrega este log para verificar los campos obligatorios.
+  console.log("Campo Faltante:", campoFaltante); // Agrega este log para verificar el campo faltante.
+
+  if (campoFaltante) {
+    const inputCampo = this.shadowRoot.getElementById(campoFaltante);
+    if (inputCampo) {
+      inputCampo.focus();
+    }
     Swal.fire({
-      icon: "success",
-      title: "¡Éxito!",
-      text: `Su nombre es: ${this.firstName}`,
-      confirmButtonColor: "swalBtnColor",
-      confirmButtonText: "Aceptar...",
+      icon: 'warning',
+      title: 'Falta ingresar un dato',
+      text: 'Por favor, completa todos los campos obligatorios.',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  } else {
+    const vehicleDataString = JSON.stringify(vehicleData, null, 2);
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      html: `Datos del vehículo:<br><pre>${vehicleDataString}</pre>`,
+      confirmButtonColor: 'swalBtnColor',
+      confirmButtonText: 'Aceptar...',
     }).then(() => {});
+  }
   };
 
   static styles = css`
@@ -132,20 +188,22 @@ export class createV extends LitElement {
 
         <input
           type="search"
-          id="id-vin"
+          id="vin"
           @input=${this.entradaDeVin}
           @change=${this.handleVinChange}
           placeholder="NUMERO DE VIN"
         />
-        <input type="text" id="id-marca" @input=${this.entradaDeText} placeholder="MARCA" />
-        <input type="text" id="id-modelo" @input=${this.entradaDeText} placeholder="MODELO" />
-        <input type="number" id="id-year" min="1900" max="2099" @input=${this.entradaDeText} placeholder="AÑO" />
+        <input type="text" id="marca" @input=${this.entradaDeText} placeholder="MARCA" required />
+        <input type="text" id="modelo" @input=${this.entradaDeText} placeholder="MODELO" required />
+        <input type="number" id="year" min="1900" max="2099" @input=${this.entradaDeText} placeholder="AÑO" required />
 
         <input
           type="number"
+          id="precio" 
           min="1"
           @input=${this.entradaDeText}
           placeholder="PRECIO"
+          required
         />
         </div>
         <!-- Naviera -->
@@ -155,37 +213,45 @@ export class createV extends LitElement {
           </div>
         <input
           type="number"
+          id="montoGrua" 
           min="1"
           @input=${this.entradaDeText}
           placeholder="Monto de Grúa"
+          required
         />
         <input
           type="number"
+          id="montoBarco" 
+          id="id-" 
           min="1"
           @input=${this.entradaDeText}
           placeholder="Monto Barco"
+          required
         />
         <input
           type="number"
+          id="montoOtro" 
           min="1"
           @input=${this.entradaDeText}
           placeholder="Monto/Otro"
+
         />
          
 
-          <select class="selectNaviera" name="navieras" id="naviera" required>
+          <select class="selectNaviera" name="navieras" id="naviera" @change=${this.entradaDeText} required>
             <option disabled selected>Selecciona una naviera</option>
             <option value="northAtlantic">North Atlantic</option>
             <option value="atm">ATM</option>
-            <option value="matus">Matus</option>
-
-            <!-- @value=${this.entradaDeText} -->
+            <option value="matus">Matus</option> 
           </select>
         </div>
         <div class="div-button">
-          <button class="btn" @click=${this.handleSubmit}>Guardar</button>
+          <button class="btn" @click=${this.guardarDatos}>Guardar</button>
         </div>
-        <p>${this.firstName ? `First Name: ${this.firstName}` : ""}</p>
+        <p>${this.marca ? `Marca: ${this.marca}` : ""}</p>
+        <p>${this.montoGrua ? `Monto Grua: ${this.montoGrua}` : ""}</p>
+        <p>${this.montoBarco ? `Monto Barco: ${this.montoBarco}` : ""}</p>
+        <p>${this.naviera ? `Naviera: ${this.naviera}` : ""}</p>
       </div>
     `;
   }
@@ -193,5 +259,3 @@ export class createV extends LitElement {
 
   customElements.define('create-v', createV);
 
- 
- 

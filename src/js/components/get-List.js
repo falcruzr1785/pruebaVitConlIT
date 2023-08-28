@@ -2,9 +2,63 @@ import { LitElement, html, css } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
-
+import {GetDataProred} from '../API/server'
 
 export class GetList extends LitElement {
+  
+  static get properties() {
+    return {
+      id : String,
+      text: String,
+      
+    };
+  }
+
+  constructor() {
+    super();
+    this.loadData(); // Llama a una función para cargar los datos
+    this.data;
+    let idSelect = " ";
+    globalThis.idSelect ='';
+    this.tableClasses = {
+      "my-table": true, // Agrega tus clases aquí
+    };
+
+   
+
+    // Definimos las clases de las filas en función del índice
+    this.rowClasses = (index) => ({
+      "par-row": index % 2 === 0,
+      "impar-row": index % 2 !== 0,
+    });
+  }
+  loadData =  async () => {
+     
+    try {
+      this.data = await GetDataProred();
+      // Una vez que los datos estén disponibles, se asignarán a this.data
+      // Ahora puedes actualizar tu componente para reflejar los datos
+    } catch (error) {
+      console.error('Error al cargar los datos:', error);
+    }
+  }
+
+  
+editarDatos = (id) => {
+ 
+   this.idSelect = id;
+  window.location.href = `/edit-Vehicle.html?id=${id}`;
+  
+}
+
+crearPlantilla = (id) => {
+    
+  
+  window.location.href = `/create-p.html?id=${id}`;
+ 
+  }
+  
+ 
   static styles = css`
   .table-list {
     font-family: Arial, Helvetica, sans-serif;
@@ -66,97 +120,6 @@ export class GetList extends LitElement {
   }
 `;
 
-  constructor() {
-    super();
-    this.data = [
-       
-      { id: '1',
-        dateBuy: new Date(),
-        vin: "22222222222",
-        marca: "Toyota",
-        modelo: "Corolla",
-        ano: 2010,
-        naviera: "ATM",
-        cliente: "Pedro",
-        arribo: false,
-      },
-      {
-        
-        id: '1',
-        dateBuy: new Date(),vin: "42",
-        marca: "Toyota",
-        modelo: "Corolla",
-        ano: 2010,
-        naviera: "ATM",
-        cliente: "Pedro",
-        arribo: false,
-      },
-      {
-        id: '1',
-        dateBuy: new Date(),
-        vin: "344",
-        marca: "Toyota",
-        modelo: "Corolla",
-        ano: 2010,
-        naviera: "ATM",
-        cliente: "Pedro",
-        arribo: false,
-      },
-      {
-        id: '1',
-        dateBuy: new Date(),
-        vin: "2",
-        marca: "Toyota",
-        modelo: "Corolla",
-        ano: 2010,
-        naviera: "ATM",
-        cliente: "Pedro",
-        arribo: false,
-      },
-      {
-        id: '1',
-        dateBuy: new Date(),
-        vin: "5",
-        marca: "Toyota",
-        modelo: "Corolla",
-        ano: 2010,
-        naviera: "ATM",
-        cliente: "Pedro",
-        arribo: true,
-      },
-      {
-        id: '1',
-        dateBuy: new Date(),
-        vin: "6",
-        marca: "Toyota",
-        modelo: "Corolla",
-        ano: 2010,
-        naviera: "ATM",
-        cliente: "Pedro",
-        arribo: false,
-      },
-      
-    ]; // Aquí deberías cargar los datos de tu JSON
-
-    // crearPlantila = (v) => {
-    //   if(v){
-    //     const textP = v;
-    //   }
-      
-    // };
-
-
-    this.tableClasses = {
-      "my-table": true, // Agrega tus clases aquí
-    };
-
-    // Definimos las clases de las filas en función del índice
-    this.rowClasses = (index) => ({
-      "par-row": index % 2 === 0,
-      "impar-row": index % 2 !== 0,
-    });
-  }
-
   render() {
     return html`
       <div class="div-list">
@@ -199,10 +162,14 @@ export class GetList extends LitElement {
                   <td>${item.cliente}</td>
                   <td>${item.arribo ? "Sí" : "No"}</td>
                   <td>
-                    <!-- <button  class="btnEditar" @click=${() => this.editRow(item)}>Editar</button> -->
+                 <button id="btnEditar" class="btnEditar" @click=${() => this.editarDatos(item.id)}
+                 data-id="${item.id}"
+                 >Editar</button> 
                   </td>
                   <td>
-                    <!-- <button  class="btnEditar" @click=${() => this.editRow(item)}>Crear plantilla</button> -->
+                 <button  id="btnCrearP" class="btnEditar" @click=${() => this.crearPlantilla(item.id)}
+                 data-id="${item.id}"
+                 >Crear plantilla</button> 
                   </td>
                 </tr>
               `
